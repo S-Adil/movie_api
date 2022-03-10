@@ -1,0 +1,22 @@
+<!<!DOCTYPE html>
+<<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Documentation for myFlix API</title>
+  </head>
+  <body>
+  <p>  This application is the server-side component of a “movies” web application. The web application will provide users with access to information about different movies, directors, and genres. Users will be able to sign up, update their personal information, and create a list of their favorite movies.
+
+| **Business Logic** | **URL** | **HTTP Method** | **Request body data format** | **Response body data format** |
+| --- | --- | --- | --- | --- |
+| Return a list of ALL movies to the user | /topMovies | GET | None | JSON object holding data about all movies |
+| Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie by title to the user | /topMovies/:title | GET | None | JSON object holding data about a single movie by title to user. Eg:  <br> |
+| Return data about a genre (description) by name/title (e.g., “Thriller”) | /topMovies/genre/:genreName | GET | None | JSON object holding data about a genre and a description of that genre. Eg: |
+| Return data about a director (bio, birth year, death year) by name | /topMovies/directors/:directorName | GET | None |  |
+| Allow new users to register | /users | POST | JSON object holding data about the new user to add, structured like:  <br>{  <br>id: 1,  <br>name: "Kim",  <br>favouriteMovies: \[\]  <br>} | JSON object holding data about the new user that was added, structured like:  <br>{  <br>"name": "Roberto",  <br>"favouriteMovies": \[\],  <br>"id": "4215c934-acfe-4fd3-8665-5002f30a9402"  <br>} |
+| Allow users to update their user info (username) | /users/:id | UPDATE | JSON object containing new user name. Eg:  <br>{  <br>"name": "Kimmy kim kim",  <br>"favouriteMovies": \[\]  <br>} | JSON object containing updated user name Eg: {  <br>"id": 1,  <br>"name": "Kimmy kim kim",  <br>"favouriteMovies": \[\]  <br>} |
+| Allow users to add a movie to their list of favorites (showing only a text that a movie has been added—more on this later) | /users/:id/:movieTitle | PUT | URL containing name of movie to be added | A string saying the movie has been added |
+| Allow users to remove a movie from their list of favorites (showing only a text that a movie has been removed—more on this later) | /users/:id/:movieTitle | DELETE | URL containing name of movie to be deleted | A string saying the movie has been deleted |
+| Allow existing users to deregister (showing only a text that a user email has been removed—more on this later) | /users/:id | DELETE | URL containing ID of user to be removed | A string saying the user has been removed | </p>
+</html>
