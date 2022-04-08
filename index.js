@@ -11,6 +11,12 @@ Users = Models.User;
 //body-parser middleware module allows you to read the “body” of HTTP requests within your request handlers simply by using the code req.body
 app.use(bodyParser.json());
 
+let auth = require('./auth')(app); // the app argument here ensures that Express is available in your "auth.js" file as well.
+
+//need to require passport module and import passport.js file
+const passport = require('passport');
+require('./passport');
+
 
 mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
@@ -75,7 +81,7 @@ app.post('/users', (req, res) => {
 //READ
 
 // Get all users
-app.get('/users', (req, res) => {
+app.get('/users', passport.authenticate('jwt', { session: false}), (req, res) => {
   Users.find()
   .then((users) => {
     res.status(201).json(users);
@@ -87,7 +93,7 @@ app.get('/users', (req, res) => {
 });
 
 // Get a user by username
-app.get('/users/:Username', (req, res) => {
+app.get('/users/:Username', passport.authenticate('jwt', { session: false}), (req, res) => {
   Users.findOne({ Username: req.params.Username })
   .then((user) => {res.json(user);
   })
@@ -98,7 +104,7 @@ app.get('/users/:Username', (req, res) => {
 });
 
 // get JSON object when /movies (returns all movies)
-app.get('/movies', (req, res) => {
+app.get('/movies', passport.authenticate('jwt', { session: false}), (req, res) => {
   Movies.find()
   .then((movies) => {
     res.status(201).json(movies);
@@ -110,7 +116,7 @@ app.get('/movies', (req, res) => {
 });
 
 //READ get movie info by title
-app.get('/movies/:Title', (req,res) => {
+app.get('/movies/:Title', passport.authenticate('jwt', { session: false}), (req,res) => {
   Movies.findOne({ Title: req.params.Title })
   .then((movie) => {
     res.status(201).json(movie);
@@ -122,7 +128,7 @@ app.get('/movies/:Title', (req,res) => {
 });
 
 //READ get information on genre by name
-app.get('/genre/:Name', (req,res) => {
+app.get('/genre/:Name', passport.authenticate('jwt', { session: false}), (req,res) => {
   Movies.findOne({ 'Genre.Name': req.params.Name })
   .then((movie) => {
     res.json(movie.Genre.Description);
@@ -135,7 +141,7 @@ app.get('/genre/:Name', (req,res) => {
 
 
 //READ GET data about a director (bio, birth year, death year) by name
-app.get('/director/:Name', (req,res) => {
+app.get('/director/:Name', passport.authenticate('jwt', { session: false}), (req,res) => {
   Movies.findOne({ 'Director.Name': req.params.Name })
   .then((movie) => {
     res.json(movie.Director);
@@ -161,7 +167,7 @@ Birthday: Date
 }
 */
 
-app.put('/users/:Username', (req,res) => {
+app.put('/users/:Username', passport.authenticate('jwt', { session: false}), (req,res) => {
   Users.findOneAndUpdate({ Username: req.params.Username }, {$set:
     {
       Username: req.body.Username,
@@ -183,7 +189,7 @@ app.put('/users/:Username', (req,res) => {
 
 
 // Add a movie to a user's list of favourites
-app.post('/users/:Username/movies/:MovieID', (req, res) => {
+app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false}), (req, res) => {
   Users.findOneAndUpdate({ Username: req.params.Username }, {
     $push: { FavouriteMovies: req.params.MovieID }
   },
@@ -200,7 +206,7 @@ app.post('/users/:Username/movies/:MovieID', (req, res) => {
 //DELETE
 
 //Allow user to delete movie title from FavouriteMovies collection
-app.delete('/users/:Username/movies/:MovieID', (req, res) => {
+app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false}), (req, res) => {
   Users.findOneAndUpdate({ Username: req.params.Username }, {
     $pull: { FavouriteMovies: req.params.MovieID }
   },
@@ -218,7 +224,7 @@ app.delete('/users/:Username/movies/:MovieID', (req, res) => {
 
 
 //DELETE a user by username
-app.delete('/users/:Username', (req, res) => {
+app.delete('/users/:Username', passport.authenticate('jwt', { session: false}), (req, res) => {
   Users.findOneAndRemove({ Username: req.params.Username }).then((user) => {
     if(!user) {
       res.status(400).send(req.params.Username + ' was not found');
