@@ -11,7 +11,7 @@ Users = Models.User;
 //body-parser middleware module allows you to read the “body” of HTTP requests within your request handlers simply by using the code req.body
 app.use(bodyParser.json());
 
-const cors = require('cors');
+const cors= require('cors');
 app.use(cors());
 
 // To allow certain origins to be given access to make requests
@@ -118,7 +118,8 @@ app.post('/users', (req, res) => {
       console.error(error);
       res.status(500).send('Error: ' + error);
     });
-  };
+  });
+
 
   //READ
 
