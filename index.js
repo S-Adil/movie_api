@@ -38,8 +38,8 @@ const passport = require('passport');
 require('./passport');
 
 
-// mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
-mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
+// mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 
 
@@ -93,7 +93,7 @@ app.post('/users',
       return res.status(422).json({ errors: errors.array() });
     }
 
-    let hashedPassword = Users.hashedPassword(req.body.Password);
+    let hashPassword = Users.hashPassword(req.body.Password);
     Users.findOne({ Username: req.body.Username }) // Search to see if a user with the requested username already exists
     .then((user) => {
       if (user) {
@@ -103,7 +103,7 @@ app.post('/users',
         Users
         .create({
           Username: req.body.Username,
-          Password: hashedPassword,
+          Password: hashPassword,
           Email: req.body.Email,
           Birthday: req.body.Birthday
         })
@@ -216,11 +216,11 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false}),[
     check('Password', 'Password is required').not().isEmpty(),
     check('Email', 'Email does not appear to be valid').isEmail()
   ], (req,res) => {
-  let hashedPassword = Users.hashedPassword(req.body.Password);
+  let hashPassword = Users.hashPassword(req.body.Password);
   Users.findOneAndUpdate({ Username: req.params.Username }, {$set:
     {
       Username: req.body.Username,
-      Password: hashedPassword,
+      Password: hashPassword,
       Email: req.body.Email,
       Birthday: req.body.Birthday
     }
