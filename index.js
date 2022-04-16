@@ -118,7 +118,7 @@ app.post('/users', (req, res) => {
       console.error(error);
       res.status(500).send('Error: ' + error);
     });
-  });
+  };
 
   //READ
 
