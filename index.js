@@ -75,7 +75,7 @@ Password: String,
 Email: String,
 Birthday: Date
 }*/
-app.post('/users', (req, res) => {
+app.post('/users',
   // Validation logic here for request
   //you can either use a chain of methods like .not().isEmpty()
   //which means "opposite of isEmpty" in plain english "is not empty"
