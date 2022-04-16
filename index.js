@@ -11,11 +11,11 @@ Users = Models.User;
 //body-parser middleware module allows you to read the “body” of HTTP requests within your request handlers simply by using the code req.body
 app.use(bodyParser.json());
 
-const cors n= require('cors');
-// app.use(cors());
+const cors = require('cors');
+app.use(cors());
 
 // To allow certain origins to be given access to make requests
-
+/*
 let allowedOrigins = [ 'http://localhost:8080', 'http://testsite.com'];
 
 app.use(cors({
@@ -28,7 +28,7 @@ app.use(cors({
     return callback(null, true);
   }
 }));
-
+*/
 const { check, validationResult } = require('express-validator');
 
 let auth = require('./auth')(app); // the app argument here ensures that Express is available in your "auth.js" file as well.
