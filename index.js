@@ -182,7 +182,6 @@ app.post('/users',
     });
   });
 
-
   //READ GET data about a director (bio, birth year, death year) by name
   app.get('/director/:Name', passport.authenticate('jwt', { session: false}), (req,res) => {
     Movies.findOne({ 'Director.Name': req.params.Name })
