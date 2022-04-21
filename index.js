@@ -37,8 +37,10 @@ let auth = require('./auth')(app); // the app argument here ensures that Express
 const passport = require('passport');
 require('./passport');
 
-
+// Code for connecting local database on comp to api. Will comment in for testing locally on Postman
 //mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
+
+//code for connecting to online database (using atlas mongodb) using environment variables
 mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 
