@@ -16,7 +16,7 @@ app.use(cors());
 
 // To allow certain origins to be given access to make requests
 
-let allowedOrigins = ['http://localhost:8080', 'https://sana-movie-app.herokuapp.com'];
+let allowedOrigins = ['http://localhost:8080', 'http://localhost:1234', 'https://sana-movie-app.herokuapp.com'];
 
 app.use(cors({
   origin: (origin, callback) => {
