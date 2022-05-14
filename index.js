@@ -150,7 +150,7 @@ app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (r
 });
 
 // get JSON object when /movies (returns all movies)
-app.get('/movies', (req, res) => {
+app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.find()
     .then((movies) => {
       res.status(201).json(movies);
