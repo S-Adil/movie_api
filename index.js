@@ -68,15 +68,7 @@ app.use((err, req, res, next) => {
 
 //CREATE
 
-//Add a user
-/*We'll expect JSON in this format
-{
-ID: Integer,
-Username: String,
-Password: String,
-Email: String,
-Birthday: Date
-}*/
+
 app.post('/users',
   // Validation logic here for request
   //you can either use a chain of methods like .not().isEmpty()
